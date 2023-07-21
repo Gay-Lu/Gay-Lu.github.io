@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>个人账号汇总</title>
-    <url>/2023/07/19/account/</url>
+    <url>/archives/539913bf.html</url>
     <content><![CDATA[<p><a href="https://www.zcutie.cn/">Zcutie导航栏</a></p>
 <ul>
 <li>书签导航栏聚合</li>
@@ -15,11 +15,15 @@
 <li>有对应的说明</li>
 </ul>
 <p><a href="https://zcutie.notion.site/Zcutie-715e46e8407a4b55ba08e1d0a295c238?pvs=4">Notion笔记</a></p>
+<ul>
+<li>收集的一些notion模板</li>
+<li>一些笔记、教程以及软件</li>
+</ul>
 ]]></content>
   </entry>
   <entry>
     <title>系统按键音处理流程</title>
-    <url>/2023/07/21/touch_sound_effects/</url>
+    <url>/archives/e4af00e1.html</url>
     <content><![CDATA[<h1 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h1><p>系统按键音处理流程</p>
 <p>因为系统关闭了按键提示音，但目前需求又需要开放</p>
 <h2 id="相关文件查找"><a href="#相关文件查找" class="headerlink" title="相关文件查找"></a>相关文件查找</h2><h3 id="布局文件"><a href="#布局文件" class="headerlink" title="布局文件"></a>布局文件</h3><p>通过代码搜索“触摸提示音”，找到string对应的名称:“touch_sounds_title”，最后将文件定位到other_sound_settings.xml以及sound_settings.xml</p>
@@ -28,7 +32,7 @@
 <h3 id="java文件"><a href="#java文件" class="headerlink" title="java文件"></a>java文件</h3><p>通过touch_sounds定位到文件TouchSoundPreferenceController.java</p>
 <h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><h3 id="安卓设置中声音部分开启"><a href="#安卓设置中声音部分开启" class="headerlink" title="安卓设置中声音部分开启"></a>安卓设置中声音部分开启</h3><p>通过ARDC开启监测，定位到当前页面内的activity</p>
 <p><img src="/images/article/touch_sound_effect/image-20230721113110142.png"></p>
-<p>MtkSettings/AndroidManifest.xml</p>
+<p>MtkSettings&#x2F;AndroidManifest.xml</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">activity</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;Settings$SoundSettingsActivity&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:label</span>=<span class="hljs-string">&quot;@string/sound_settings&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:icon</span>=<span class="hljs-string">&quot;@drawable/ic_homepage_sound&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:exported</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:taskAffinity</span>=<span class="hljs-string">&quot;com.android.settings&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:parentActivityName</span>=<span class="hljs-string">&quot;Settings&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span> <span class="hljs-attr">android:priority</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.SOUND_SETTINGS&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.settings.SOUND_SETTINGS&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.settings.ACTION_OTHER_SOUND_SETTINGS&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.category.DEFAULT&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.category.DEFAULT&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.category.VOICE_LAUNCH&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.SHORTCUT&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span> <span class="hljs-attr">android:priority</span>=<span class="hljs-string">&quot;6&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.action.SETTINGS&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.category&quot;</span></span><br><span class="hljs-tag">                       <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;com.android.settings.category.ia.homepage&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.FRAGMENT_CLASS&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;com.android.settings.notification.SoundSettings&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.PRIMARY_PROFILE_CONTROLLED&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.summary&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:resource</span>=<span class="hljs-string">&quot;@string/sound_dashboard_summary&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">activity</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>其中</p>
@@ -36,7 +40,7 @@
 
 <p>点击会跳转至该页面(fragment)，也就是SoundSettings页面</p>
 <p>里面有各种声音相关的设置，其中TouchSoundPreferenceController就是触摸提示音相关</p>
-<h4 id="TouchSoundPreferenceController"><a href="#TouchSoundPreferenceController" class="headerlink" title="TouchSoundPreferenceController"></a>TouchSoundPreferenceController</h4><p>Settings/src/com/android/settings/notification/TouchSoundPreferenceController.java</p>
+<h4 id="TouchSoundPreferenceController"><a href="#TouchSoundPreferenceController" class="headerlink" title="TouchSoundPreferenceController"></a>TouchSoundPreferenceController</h4><p>Settings&#x2F;src&#x2F;com&#x2F;android&#x2F;settings&#x2F;notification&#x2F;TouchSoundPreferenceController.java</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">TouchSoundPreferenceController</span><span class="hljs-params">(Context context, SettingsPreferenceFragment parent,</span><br><span class="hljs-params">            Lifecycle lifecycle)</span> &#123;<br>        <span class="hljs-built_in">super</span>(context, parent, lifecycle);<br>        mPreference = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SettingPref</span>(<br>            TYPE_SYSTEM, KEY_TOUCH_SOUNDS, System.SOUND_EFFECTS_ENABLED, DEFAULT_ON) &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">protected</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">setSetting</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Context context, <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> value)</span> &#123;<br>                AsyncTask.execute(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Runnable</span>() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>                        <span class="hljs-keyword">final</span> <span class="hljs-type">AudioManager</span> <span class="hljs-variable">am</span> <span class="hljs-operator">=</span><br>                            (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);<br>                        <span class="hljs-keyword">if</span> (value != <span class="hljs-number">0</span>) &#123;<br>                            am.loadSoundEffects();<br>                        &#125; <span class="hljs-keyword">else</span> &#123;<br>                            am.unloadSoundEffects();<br>                        &#125;<br>                    &#125;<br>                &#125;);<br>                <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.setSetting(context, value);<br>            &#125;<br>        &#125;;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
 <p>先对System属性值赋值</p>
@@ -66,16 +70,20 @@
 <p>同时也就是在这里，我找到了处理播放音效的方法，之前一直对System.SOUND_EFFECTS_ENABLED赋值不起作用，是该处将onPlaySoundEffect方法进行了屏蔽，放开，编译，刷机，成功，而且默认就是开启的</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> MSG_PLAY_SOUND_EFFECT:<br>	onPlaySoundEffect(msg.arg1,msg.arg2);<br></code></pre></td></tr></table></figure>
 
-<p>至于为什么会关闭/隐藏该方法，之前合入三方应用的时候提过这个bug，开启之后会与其他应用冲突，所以选择了隐藏，触摸提示音时不走该方法</p>
-]]></content>
+<p>至于为什么会关闭&#x2F;隐藏该方法，之前合入三方应用的时候提过这个bug，开启之后会与其他应用冲突，所以选择了隐藏，触摸提示音时不走该方法</p>
+<h1 id="待定"><a href="#待定" class="headerlink" title="待定"></a>待定</h1>]]></content>
       <tags>
         <tag>Android</tag>
         <tag>Settings</tag>
       </tags>
   </entry>
   <entry>
-    <title>page</title>
-    <url>/2023/07/21/page/</url>
+    <title>Android Settings源码学习</title>
+    <url>/archives/48670.html</url>
     <content><![CDATA[]]></content>
+      <tags>
+        <tag>Android</tag>
+        <tag>Settings</tag>
+      </tags>
   </entry>
 </search>
