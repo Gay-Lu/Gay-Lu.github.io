@@ -18,6 +18,11 @@
 ]]></content>
   </entry>
   <entry>
+    <title>page</title>
+    <url>/2023/07/21/page/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>系统按键音处理流程</title>
     <url>/2023/07/21/touch_sound_effects/</url>
     <content><![CDATA[<h1 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h1><p>系统按键音处理流程</p>
@@ -72,10 +77,5 @@
         <tag>Android</tag>
         <tag>Settings</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>page</title>
-    <url>/2023/07/21/page/</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>
