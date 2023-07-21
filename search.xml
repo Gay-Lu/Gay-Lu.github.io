@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>个人账号汇总</title>
-    <url>/archives/undefined.html</url>
+    <url>/2023/07/19/account/</url>
     <content><![CDATA[<p><a href="https://www.zcutie.cn/">Zcutie导航栏</a></p>
 <ul>
 <li>书签导航栏聚合</li>
@@ -19,7 +19,7 @@
   </entry>
   <entry>
     <title>系统按键音处理流程</title>
-    <url>/archives/undefined.html</url>
+    <url>/2023/07/21/touch_sound_effects/</url>
     <content><![CDATA[<h1 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h1><p>系统按键音处理流程</p>
 <p>因为系统关闭了按键提示音，但目前需求又需要开放</p>
 <h2 id="相关文件查找"><a href="#相关文件查找" class="headerlink" title="相关文件查找"></a>相关文件查找</h2><h3 id="布局文件"><a href="#布局文件" class="headerlink" title="布局文件"></a>布局文件</h3><p>通过代码搜索“触摸提示音”，找到string对应的名称:“touch_sounds_title”，最后将文件定位到other_sound_settings.xml以及sound_settings.xml</p>
@@ -75,7 +75,7 @@
   </entry>
   <entry>
     <title>page</title>
-    <url>/archives/undefined.html</url>
+    <url>/2023/07/21/page/</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
