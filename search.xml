@@ -22,43 +22,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Hexo博客文章设置</title>
-    <url>/archives/b5d2d466.html</url>
-    <content><![CDATA[<p>所有的格式都要注意空格，不然不会显示</p>
-<p>文章内设置目录开启</p>
-<p>toc: [true | false]</p>
-<p>文章封面设置</p>
-<p>image: #url: 设置图床图片 local: &#x2F;images目录下的路径</p>
-<p>默认封面</p>
-<p>zhaoo主题下默认封面设置</p>
-<p>post_image:</p>
-<p>  random: galleries #galleries 开启相册功能后自动调取 local 本地图库，需要新建&#x2F;_data&#x2F;local_images.json文件</p>
-<p>  default: &#x2F;images&#x2F;theme&#x2F;post-image.jpg</p>
-<p>local_images.json</p>
-<p>[</p>
-<p>图片的url链接</p>
-<p>]</p>
-<p>文章摘要</p>
-<p>优化文章在首页的显示</p>
-<p>excerpt:</p>
-<p>文章标签</p>
-<p>tags: [,]</p>
-<p>文章分类</p>
-<p>categories:</p>
-<ul>
-<li></li>
-</ul>
-<p>关键词</p>
-<p>keywords: , ,</p>
-<p>新建文章页面</p>
-<p>hexo new “名称”</p>
-]]></content>
-      <tags>
-        <tag>博客</tag>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>系统按键音处理流程</title>
     <url>/archives/e4af00e1.html</url>
     <content><![CDATA[<h1 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h1><p>系统按键音处理流程</p>
@@ -187,6 +150,43 @@
       <tags>
         <tag>Android</tag>
         <tag>Settings</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo博客文章设置</title>
+    <url>/archives/b5d2d466.html</url>
+    <content><![CDATA[<p>所有的格式都要注意空格，不然不会显示</p>
+<p>文章内设置目录开启</p>
+<p>toc: [true | false]</p>
+<p>文章封面设置</p>
+<p>image: #url: 设置图床图片 local: &#x2F;images目录下的路径</p>
+<p>默认封面</p>
+<p>zhaoo主题下默认封面设置</p>
+<p>post_image:</p>
+<p>  random: galleries #galleries 开启相册功能后自动调取 local 本地图库，需要新建&#x2F;_data&#x2F;local_images.json文件</p>
+<p>  default: &#x2F;images&#x2F;theme&#x2F;post-image.jpg</p>
+<p>local_images.json</p>
+<p>[</p>
+<p>图片的url链接</p>
+<p>]</p>
+<p>文章摘要</p>
+<p>优化文章在首页的显示</p>
+<p>excerpt:</p>
+<p>文章标签</p>
+<p>tags: [,]</p>
+<p>文章分类</p>
+<p>categories:</p>
+<ul>
+<li></li>
+</ul>
+<p>关键词</p>
+<p>keywords: , ,</p>
+<p>新建文章页面</p>
+<p>hexo new “名称”</p>
+]]></content>
+      <tags>
+        <tag>博客</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
