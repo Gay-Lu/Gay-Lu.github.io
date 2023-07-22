@@ -104,7 +104,7 @@
       },
       qrcode: {
         enable: true,
-        type: 'image',
+        type: 'url',
         image: '/images/qrcode.png',
       },
       toc: {
@@ -208,6 +208,8 @@
 </section>
     <section class="main">
       <section class="content">
+        
+          <p>Android8.1 Settings源码学习笔记</p>
         
         <h1 id="Android-Settings"><a href="#Android-Settings" class="headerlink" title="Android Settings"></a>Android Settings</h1><p>读源码，从AndroidManifest.xml文件入手，android版本8.0</p>
 <h2 id="AndroidManifest-xml"><a href="#AndroidManifest-xml" class="headerlink" title="AndroidManifest.xml"></a>AndroidManifest.xml</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">activity</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;Settings&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:taskAffinity</span>=<span class="hljs-string">&quot;com.android.settings.root&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">activity</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">activity-alias</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;Settings&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:taskAffinity</span>=<span class="hljs-string">&quot;com.android.settings.root&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">activity-alias</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">activity</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;.SubSettings&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:taskAffinity</span>=<span class="hljs-string">&quot;com.android.settings&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">android:parentActivityName</span>=<span class="hljs-string">&quot;Settings&quot;</span>/&gt;</span><br>    ...<br></code></pre></td></tr></table></figure>
