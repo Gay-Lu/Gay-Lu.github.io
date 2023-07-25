@@ -1,0 +1,523 @@
+
+
+<!DOCTYPE html>
+<html lang="en" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Android SystemUI之Recents近期任务部分 - Zcutie</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="
+ EventBus未掌握
+ 事件的处理具体流程未解
+...">
+  <meta name="author" content="Zcutie">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-192x192.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: false,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '高山仰止，景行行止',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: '/images/qrcode.png',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: true,
+        path: 'search.xml'
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+        <i class="iconfont iconsearch j-navbar-search"></i>
+      
+    </div>
+    <div class="center">Android SystemUI之Recents近期任务部分</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 相册</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li><li class="menu-item">
+        <a href="/links/ " class="underline "> 友链</a>
+      </li></ul>
+    
+      <div class="menu-copyright">Zcutie</div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Android SystemUI之Recents近期任务部分</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>August 04, 2022</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>11818</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+          <p>SystemUI的recents启动流程</p>
+        
+        <ul>
+<li><input disabled="" type="checkbox"> EventBus未掌握</li>
+<li><input disabled="" type="checkbox"> 事件的处理具体流程未解</li>
+</ul>
+<h1 id="启动之预加载"><a href="#启动之预加载" class="headerlink" title="启动之预加载"></a>启动之预加载</h1><p>从状态栏上的recent图标入手</p>
+<h2 id="StatusBar-java"><a href="#StatusBar-java" class="headerlink" title="StatusBar.java"></a>StatusBar.java</h2><p>statusbar上设置recentbutton</p>
+<h3 id="makeStatusBarView"><a href="#makeStatusBarView" class="headerlink" title="makeStatusBarView()"></a>makeStatusBarView()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">makeStatusBarView</span><span class="hljs-params">()</span>&#123;<br>    ...<br>    <span class="hljs-keyword">if</span>(StatusBar.atcEnhancementSupport())&#123;<br>        setRecentsButton();<br>        ...    <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="setRecentsButton"><a href="#setRecentsButton" class="headerlink" title="setRecentsButton()"></a>setRecentsButton()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setRecentsButton</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">if</span>(mStatusBarView!=<span class="hljs-literal">null</span>&amp;&amp;getStatusBarViewRecentsButton()!=<span class="hljs-literal">null</span>)&#123;<span class="hljs-comment">//判断状态栏是否为空以及状态栏是否有添加近期任务的控件</span><br>        getStatusBarViewRecentsButton().setOnClickListener(mRecentsClickListener);<span class="hljs-comment">//添加点击监听事件</span><br>        getStatusBarViewRecentsButton().setOnTouchListener(<span class="hljs-keyword">new</span> <span class="hljs-title class_">View</span>.OnTouchListener()&#123;<span class="hljs-comment">//添加触摸监听事件</span><br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">onTouch</span><span class="hljs-params">(View v,MotionEvent event)</span>&#123;<br>                <span class="hljs-type">int</span> <span class="hljs-variable">action</span> <span class="hljs-operator">=</span> event.getAction()&amp;MotionEvent.ACTION_MASK;<br>                <span class="hljs-keyword">if</span>(action == MotionEvent.ACTION_DOWN)&#123;<br>                    mCommandQueue.preloadRecentApps();<span class="hljs-comment">//预加载近期任务</span><br>                &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(action == MotionEvent.ACTION_CANCEL)&#123;<br>                    mCommandQueue.cancelPreloadRecentApps();                <br>                &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(action == MotionEvent.ACTION_UP)&#123;<br>                    <span class="hljs-keyword">if</span>(!v.isPressed())&#123;<br>                        mCommandQueue.cancelPreloadRecentApps();                    <br>                    &#125;                <br>                &#125;<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="mRecentsClickListener"><a href="#mRecentsClickListener" class="headerlink" title="mRecentsClickListener"></a>mRecentsClickListener</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> View.<span class="hljs-type">OnClickListener</span> <span class="hljs-variable">mRecentsClickListener</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">View</span>.OnClickListener()&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onClick</span><span class="hljs-params">(View v)</span>&#123;<br>        awakenDreams();<br>        mCommandQueue.toggleRecentApps();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="CommandQueue-java"><a href="#CommandQueue-java" class="headerlink" title="CommandQueue.java"></a>CommandQueue.java</h2><h3 id="toggleRecentApps"><a href="#toggleRecentApps" class="headerlink" title="toggleRecentApps()"></a>toggleRecentApps()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">toggleRecentApps</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">synchronized</span>(mLock)&#123;<br>        mHandler.removeMessages(MSG_TOGGLE_RECENT_APPS); <span class="hljs-comment">//移除之前的，确保消息最新</span><br>        <span class="hljs-type">Message</span> <span class="hljs-variable">msg</span> <span class="hljs-operator">=</span> mHandler.obtainMessage(MSG_TOGGLE_RECENT_APPS,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-literal">null</span>);<span class="hljs-comment">//发送消息，自己接收并处理</span><br>        msg.setAsynchronous(<span class="hljs-literal">true</span>);<br>        msg.sendToTarget();<br>    &#125;<br>&#125;<br>....<br><span class="hljs-keyword">case</span> MSG_TOGGLE_RECENT_APPS:<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span><span class="hljs-number">0</span>; i&lt;mCallbacks.size();i++)&#123;<br>        mCallbacks.get(i).toggleRecentApps();<span class="hljs-comment">//在Recents.java中调用toggleRecentApps</span><br>    &#125;<br>    <span class="hljs-keyword">break</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="toggleRecentApps-1"><a href="#toggleRecentApps-1" class="headerlink" title="toggleRecentApps()"></a>toggleRecentApps()</h4><p>Recents.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">toggleRecentApps</span><span class="hljs-params">()</span>&#123;<br>    ....<br>    <span class="hljs-type">int</span> <span class="hljs-variable">currentUser</span> <span class="hljs-operator">=</span> sSystemServicesProxy.getCurrentUser();<br>    <span class="hljs-keyword">if</span>(sSystemServicesProxy.isSystemUser(currentUser))&#123;<br>        mImpl.toggleRecents(growTarget);    <br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        ...    <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="toggleRecents"><a href="#toggleRecents" class="headerlink" title="toggleRecents()"></a>toggleRecents()</h5><p>RecentsImpl.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">toggleRecents</span><span class="hljs-params">(<span class="hljs-type">int</span> growTarget)</span>&#123;<br>    ...<br>    <span class="hljs-comment">//start the recents activity,启动近期任务</span><br>    ActivityManager.<span class="hljs-type">RunningTaskInfo</span> <span class="hljs-variable">runningTask</span> <span class="hljs-operator">=</span> ssp.getRunningTask();<br>    startRecentsActivity(runningTask,isHomeStackVisible.value,<span class="hljs-literal">true</span>,growTarget);<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="preloadRecentApps"><a href="#preloadRecentApps" class="headerlink" title="preloadRecentApps()"></a>preloadRecentApps()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">preloadRecentApps</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">synchronized</span>(mLock)&#123;<br>        mHandler.removeMessages(MSG_PRELOAD_RECENT_APPS);<br>        mHandler.obtainMessage(MSG_PRELOAD_RECENT_APPS,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-literal">null</span>).sendToTarget();<br>    &#125;<br>&#125;<br>...<br><span class="hljs-keyword">case</span> MSG_PRELOAD_RECENT_APPS:<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span><span class="hljs-number">0</span>; i&lt;mCallbacks.size();i++)&#123;<br>        mCallbacks.get(i).preloadRecentApps();<span class="hljs-comment">//在主线程回调</span><br>    &#125;<br>    <span class="hljs-keyword">break</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Recents-java"><a href="#Recents-java" class="headerlink" title="Recents.java"></a>Recents.java</h2><p>在systemui启动的时候，就通过SystemUIApplication.java中的mService[i].start()对Recents.java进行初始化</p>
+<h3 id="preloadRecentApps-1"><a href="#preloadRecentApps-1" class="headerlink" title="preloadRecentApps()"></a>preloadRecentApps()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">preloadRecentApps</span><span class="hljs-params">()</span>&#123;<br>    ...<br>    <span class="hljs-type">int</span> <span class="hljs-variable">currentUser</span> <span class="hljs-operator">=</span> sSystemServicesProxy.getCurrentUser();<br>    <span class="hljs-keyword">if</span> (sSystemServicesProxy.isSystemUser(currentUser)) &#123;<span class="hljs-comment">//系统用户</span><br>        mImpl.preloadRecents();<span class="hljs-comment">//RecentsImpl.java</span><br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">if</span> (mSystemToUserCallbacks != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-type">IRecentsNonSystemUserCallbacks</span> <span class="hljs-variable">callbacks</span> <span class="hljs-operator">=</span><br>                mSystemToUserCallbacks.getNonSystemUserRecentsForUser(currentUser);<br>        <span class="hljs-keyword">if</span> (callbacks != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                callbacks.preloadRecents();<br>            &#125; <span class="hljs-keyword">catch</span> (RemoteException e) &#123;<br>                Log.e(TAG, <span class="hljs-string">&quot;Callback failed&quot;</span>, e);<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            Log.e(TAG, <span class="hljs-string">&quot;No SystemUI callbacks found for user: &quot;</span> + currentUser);<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="RecentsImpl-java"><a href="#RecentsImpl-java" class="headerlink" title="RecentsImpl.java"></a>RecentsImpl.java</h2><h3 id="preloadRecents"><a href="#preloadRecents" class="headerlink" title="preloadRecents()"></a>preloadRecents()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">preloadRecents</span><span class="hljs-params">()</span>&#123;<br>    ...<br>    mHandler.post(()-&gt;&#123;<br>        ...<br>        <span class="hljs-type">RecentsTaskLoader</span> <span class="hljs-variable">loader</span> <span class="hljs-operator">=</span> Recents.getTaskLoader();<span class="hljs-comment">//获取Recents.start()中初始化的RecentsTaskLoader对象</span><br>        sInstanceLoadPlan = loader.createLoadPlan(mContext);<span class="hljs-comment">//返回RecentsTaskLoadPlan对象</span><br>        loader.preloadTasks(sInstanceLoadPlan,runningTask.id,!isHomeStackVisible.value);<span class="hljs-comment">//调用RecentsTaskLoadPlan的preloadPlan()方法预加载所有近期任务，并存入TaskStack中,初始化mStack(TaskStack)</span><br>        <span class="hljs-type">TaskStack</span> <span class="hljs-variable">stack</span> <span class="hljs-operator">=</span> sInstanceLoadPlan.getTaskStack();<span class="hljs-comment">//获取上面初始化的mStack</span><br>        <span class="hljs-keyword">if</span>(stack.getTaskCount()&gt;<span class="hljs-number">0</span>)&#123;<br>            preloadIcon(runningTask.id);<br>            updateHeaderBarLayout(stack,<span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="preloadTasks"><a href="#preloadTasks" class="headerlink" title="preloadTasks()"></a>preloadTasks()</h4><p>RecentsTaskLoader.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">preloadTasks</span><span class="hljs-params">(RecentsTaskLoadPlan plan,<span class="hljs-type">int</span> runningTaskId,<span class="hljs-type">boolean</span> includeFrontMostExcludedTask)</span>&#123;<br>    <span class="hljs-keyword">try</span>&#123;<br>        plan.preloadPlan(<span class="hljs-built_in">this</span>,runningTaskId,includeFrontMostExcludedTask);    <br>    &#125;<span class="hljs-keyword">finally</span>&#123;<br>        Trace.endSection();    <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="preloadPlan"><a href="#preloadPlan" class="headerlink" title="preloadPlan()"></a>preloadPlan()</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">preloadPlan</span><span class="hljs-params">(RecentsTaskLoader loader,<span class="hljs-type">int</span> runningTaskId,<span class="hljs-type">boolean</span> includeFrontMostExcludedTask)</span>&#123;<br>    ...<br>    <span class="hljs-keyword">if</span>(mRawTasks == <span class="hljs-literal">null</span>)&#123;<br>        preloadRawTasks(includeFrontMostExcludedTask);    <br>    &#125;<br>    ...<br>    <span class="hljs-type">int</span> <span class="hljs-variable">taskCount</span> <span class="hljs-operator">=</span> mRawTasks.size();<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; taskCount; i++)&#123;<br>        ActivityManager.<span class="hljs-type">RecentTaskInfo</span> <span class="hljs-variable">t</span> <span class="hljs-operator">=</span> mRawTasks.get(i);<br>        Task.<span class="hljs-type">TaskKey</span> <span class="hljs-variable">taskKey</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Task</span>.TaskKey(t.persistentId,t.stackId,t.baseIntent<br>                                    t.userId,t.firstActiveTime,t.lastActiveTime);<span class="hljs-comment">//为task生成taskKey</span><br>    &#125;<br>    ...<br>    <span class="hljs-type">ActivityInfo</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> loader.getAndUpdateActivityInfo(taskKey);<span class="hljs-comment">//通过taskKey获取活动信息</span><br>    <span class="hljs-comment">/*加载图标、标题、颜色等信息*/</span><br>    <span class="hljs-type">Task</span> <span class="hljs-variable">task</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Task</span>(taskKey,t.affiliatedTaskId, t.affiliatedTaskColor, icon,<br>        thumbnail, title, titleDescription, dismissDescription, appInfoDescription,<br>        activityColor, backgroundColor, isLaunchTarget, isStackTask, isSystemApp,<br>        t.supportsSplitScreenMultiWindow, t.bounds, t.taskDescription, t.resizeMode, t.topActivity,<br>        isLocked);<span class="hljs-comment">//新生成task，将获取的信息加载进去</span><br>        <span class="hljs-comment">/*将生成的task添加到allTasks栈中*/</span><br>    allTasks.add(task);<br>    affiliatedTaskCounts.put(taskKey.id, affiliatedTaskCounts.get(taskKey.id, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);<br>    affiliatedTasks.put(taskKey.id, taskKey);<br>    ...<br>    mStack = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TaskStack</span>();<br>    mStack.setTasks(mContext,allTasks,<span class="hljs-literal">false</span>);<span class="hljs-comment">//一次性设置多个任务</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>preloadRawTasks()</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">preloadRawTasks</span><span class="hljs-params">(<span class="hljs-type">boolean</span> includeFrontMostExcludedTask)</span> &#123;<br>    <span class="hljs-type">SystemServicesProxy</span> <span class="hljs-variable">ssp</span> <span class="hljs-operator">=</span> Recents.getSystemServices();<br>    <span class="hljs-type">int</span> <span class="hljs-variable">currentUserId</span> <span class="hljs-operator">=</span> ssp.getCurrentUser();<br>    updateCurrentQuietProfilesCache(currentUserId);<br>    mPreloadedUserId = currentUserId;<br>    mRawTasks = ssp.getRecentTasks(ActivityManager.getMaxRecentTasksStatic(),<br>            currentUserId, includeFrontMostExcludedTask, mCurrentQuietProfiles);<br>    <span class="hljs-comment">// Since the raw tasks are given in most-recent to least-recent order, we need to reverse it</span><br>    Collections.reverse(mRawTasks);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="setTasks"><a href="#setTasks" class="headerlink" title="setTasks()"></a>setTasks()</h6><p>当stack中的任务发生变化时调用(remove、add)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setTasks</span><span class="hljs-params">(Context context,List&lt;Task&gt; tasks,<span class="hljs-type">boolean</span> notifyStackChanges)</span>&#123;<br>    ...<br>    <span class="hljs-type">int</span> <span class="hljs-variable">removedTaskCount</span> <span class="hljs-operator">=</span> removedTasks.size();<br>    <span class="hljs-type">Task</span> <span class="hljs-variable">newFrontMostTask</span> <span class="hljs-operator">=</span> getStackFrontMostTask(<span class="hljs-literal">false</span>);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span><span class="hljs-number">0</span>;i&lt;removedTaskCount;i++)&#123;<br>        mCb.onStackTaskRemoved(<span class="hljs-built_in">this</span>,removedTasks.get(i),newFrontMostTask,AnimationProps.IMMEDIATE,<span class="hljs-literal">false</span>,<span class="hljs-literal">true</span>);    <br>    &#125;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">addedTaskCount</span> <span class="hljs-operator">=</span> addedTasks.size();<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;i &lt; addedTaskCount;i++)&#123;<br>        mCb.onStackTaskAdded(<span class="hljs-built_in">this</span>,addedTasks.get(i));    <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><h2 id="RecentsImpl-java-1"><a href="#RecentsImpl-java-1" class="headerlink" title="RecentsImpl.java"></a>RecentsImpl.java</h2><h3 id="startRecentsActivity"><a href="#startRecentsActivity" class="headerlink" title="startRecentsActivity()"></a>startRecentsActivity()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">startRecentsActivity</span><span class="hljs-params">(ActivityManager.RunningTaskInfo runningTask,</span><br><span class="hljs-params">        <span class="hljs-type">boolean</span> isHomeStackVisible,<span class="hljs-type">boolean</span> animate,<span class="hljs-type">int</span> growTarget)</span>&#123;<br>            ...<br>            <span class="hljs-keyword">if</span>(!animate)&#123;<span class="hljs-comment">//传入过来的时候animate=true，所以不执行</span><br>                startRecentsActivity(ActivityOptions.makeCustomAnimation(mContext,-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>),<span class="hljs-literal">null</span>);<br>                <span class="hljs-keyword">return</span> ;            <br>            &#125;<br>            Pair&lt;ActivityOptions,AppTransitionAnimationSpecsFuture&gt; pair;<br>            <span class="hljs-keyword">if</span>(isBlacklisted)&#123;<br>                pair = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Pair</span>&lt;&gt;(getUnknowTransitionActivityOptions(),<span class="hljs-literal">null</span>);<br>            &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(useThumbnailTransition)&#123;<br>                pair = getThumbnailTransitionActivityOptions(runningTask,windowOverrideRect);            <br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                pair = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Pair</span>&lt;&gt;(hasRecentTasks?getHomeTransitionActivityOptions():getUnknownTransitionActivityOptions(),<span class="hljs-literal">null</span>);            <br>            &#125;<br>            startRecentsActivity(pair.first,pair.second);<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="startRecentsActivity-1"><a href="#startRecentsActivity-1" class="headerlink" title="startRecentsActivity()"></a>startRecentsActivity()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">RECENTS_PACKAGE</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;com.android.systemui&quot;</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">RECENTS_ACTIVITY</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;com.android.systemui.recents.RecentsActivity&quot;</span>;<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">startRecentsActivity</span><span class="hljs-params">(ActivityOptions opts,<span class="hljs-keyword">final</span> AppTransitionAnimationSpecsFuture future)</span>&#123;<br>    <span class="hljs-type">Intent</span> <span class="hljs-variable">intent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Intent</span>();<br>    intent.setClassName(RECENTS_PACKAGE,RECENTS_ACTIVITY);<br>    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK<br>            |Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS<br>            |Intent.FLAG_ACTIVITY_TASK_ON_HOME);<br>    <span class="hljs-type">HidePipMenuEvent</span> <span class="hljs-variable">hideMenuEvent</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HidePipMenuEvent</span>();<br>    hideMenuEvent.addPostAnimationCallback(()-&gt;&#123;<br>        Recents.getSystemServices().startActivityAsUserAsync(intent,opts);<br>        EventBus.getDefault().send(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RecentsActivityStartingEvent</span>());<br>        <span class="hljs-keyword">if</span>(future!=<span class="hljs-literal">null</span>)&#123;<br>            future.precacheSpecs();        <br>        &#125;<br>    &#125;);<br>    EventBus.getDefault().send(hideMenuEvent);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="RecentsActivity-java"><a href="#RecentsActivity-java" class="headerlink" title="RecentsActivity.java"></a>RecentsActivity.java</h2><h3 id="onCreate"><a href="#onCreate" class="headerlink" title="onCreate()"></a>onCreate()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span>&#123;<br>    ...<br>    EventsBus.getDefault().register(<span class="hljs-built_in">this</span>,EVENT_BUS_PRIORITY);<span class="hljs-comment">//向EventBus注册此活动</span><br>    ...<br>    setContentView(R.layout.recents);<br>    takeKeyEvents(<span class="hljs-literal">true</span>);<br>    mRecentsView = findViewById(R.id.recents_view);<br>    ...<br>    <span class="hljs-comment">//Reload the stack view</span><br>    reloadStackView();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="RecentView-java"><a href="#RecentView-java" class="headerlink" title="RecentView.java"></a>RecentView.java</h4><p>加载recents布局时调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RecentsView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">FrameLayout</span>&#123;<br>    <span class="hljs-keyword">private</span> TaskStackView mTaskStackView;<span class="hljs-comment">//近期任务视图</span><br>    <span class="hljs-keyword">private</span> TextView mStackActionButton;<span class="hljs-comment">//清空所有任务</span><br>    <span class="hljs-keyword">private</span> TextView mEmptyView;<span class="hljs-comment">//无近期任务时显示文本</span><br>    ...<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">RecentsView</span><span class="hljs-params">(Context context,AttributeSet attrs,<span class="hljs-type">int</span> defStyleAttr,<span class="hljs-type">int</span> defStyleRes)</span>&#123;<br>        ...<br>        <span class="hljs-comment">//加载控件</span><br>        <span class="hljs-type">LayoutInflater</span> <span class="hljs-variable">inflater</span> <span class="hljs-operator">=</span> LayoutInflater.from(context);<br>        mEmptyView = (TextView) inflater.inflate(R.layout.recents_empty,<span class="hljs-built_in">this</span>,<span class="hljs-literal">false</span>);<br>        addView(mEmptyView);<br>        <span class="hljs-keyword">if</span>(RecentsDebugFlags.Static.EnableStackActionButton)&#123;<span class="hljs-comment">//true，执行</span><br>        <span class="hljs-keyword">if</span>(mStackActionButton!=<span class="hljs-literal">null</span>)&#123;<br>            removeView(mStackActionButton);<span class="hljs-comment">//移除视图</span><br>            &#125;<br>        mStackActionButton = (TextView) inflater.inflate(Recents.getConfiguration().isLowRamDevice<br>                                                ?R.layout.recents_low_raw_stack_action_button<br>                                                :R.layout.recents_stack_action_button,<br>                                                <span class="hljs-built_in">this</span>,<span class="hljs-literal">false</span>);<br>        &#125;<br>        ...<br>        addView(mStackActionButton);<br>    &#125;<br>    reevaluateStyles();<span class="hljs-comment">//适配更改style</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="reloadStackView"><a href="#reloadStackView" class="headerlink" title="reloadStackView()"></a>reloadStackView()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">reloadStackView</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">RecentsTaskLoader</span> <span class="hljs-variable">loader</span> <span class="hljs-operator">=</span> Recents.getTaskLoader();<br>    <span class="hljs-type">RecentsTaskLoadPlan</span> <span class="hljs-variable">loadPlan</span> <span class="hljs-operator">=</span> RecentsImpl.consumeInstanceLoadPlan();<br>    ...<br>    loader.loadTasks(<span class="hljs-built_in">this</span>,loadPlan,loadOpts);<br>    <span class="hljs-type">TaskStack</span> <span class="hljs-variable">stack</span> <span class="hljs-operator">=</span> loadPlan.getTaskStack();<br>    mRecentsView.onReload(stack,mIsVisible);<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>Zcutie</li>
+    <li><strong>本文链接：</strong><a href="http://zcutie.top/archives/86ca21a1.html" title="http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;86ca21a1.html">http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;86ca21a1.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SystemUI/" rel="tag">SystemUI</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/archives/48670.html"><i class="iconfont iconleft"></i>Android Settings源码学习</a>
+    <a></a>
+  </nav>
+
+      </section>
+      
+        <section class="comments">
+  
+    <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "W2WK3aaVLTRFMfYYo9SfMGA1-gzGzoHsz",
+        app_key: "O5nq0oeKoFAgxU27EilJ4cXR",
+        placeholder: "雁过留痕",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E4%B9%8B%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-text">启动之预加载</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#StatusBar-java"><span class="toc-text">StatusBar.java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#makeStatusBarView"><span class="toc-text">makeStatusBarView()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CommandQueue-java"><span class="toc-text">CommandQueue.java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#toggleRecentApps"><span class="toc-text">toggleRecentApps()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#preloadRecentApps"><span class="toc-text">preloadRecentApps()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recents-java"><span class="toc-text">Recents.java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#preloadRecentApps-1"><span class="toc-text">preloadRecentApps()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RecentsImpl-java"><span class="toc-text">RecentsImpl.java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#preloadRecents"><span class="toc-text">preloadRecents()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-text">启动</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RecentsImpl-java-1"><span class="toc-text">RecentsImpl.java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#startRecentsActivity"><span class="toc-text">startRecentsActivity()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RecentsActivity-java"><span class="toc-text">RecentsActivity.java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#onCreate"><span class="toc-text">onCreate()</span></a></li></ol></li></ol></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=460892649 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="/images/qrcode.png "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://github.com/Zcutie "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:Zcutie0201@outlook.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  <div class="footer-copyright">
+    
+                &copy; 2023
+            
+            Zcutie
+  </div>
+  <br/>
+  <div style="text-align:center">
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("01/30/2023 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "🚀 &nbsp 已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
+
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+    <div class="fab fab-daovoice">
+      <i class="iconfont iconcomment"></i>
+    </div>
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+    <div class="search">
+  <div class="search-container">
+    <div class="search-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <div class="search-input-wrapper">
+      <i class="search-input-icon iconfont iconsearch"></i>
+      <input class="search-input" type="search" id="search-input" placeholder="Search..." autofocus autocomplete="off"
+        autocorrect="off" autocapitalize="off">
+    </div>
+    <div class="search-output" id="search-output"></div>
+  </div>
+</div>
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", "https://widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "bab1a4b0"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

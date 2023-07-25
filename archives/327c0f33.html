@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<html lang="en" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Android系统之开机亮度需求 - Zcutie</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="修改Android开机动画结束后到加载Launcher...">
+  <meta name="author" content="Zcutie">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-192x192.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: false,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '高山仰止，景行行止',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: '/images/qrcode.png',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: true,
+        path: 'search.xml'
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+        <i class="iconfont iconsearch j-navbar-search"></i>
+      
+    </div>
+    <div class="center">Android系统之开机亮度需求</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 相册</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li><li class="menu-item">
+        <a href="/links/ " class="underline "> 友链</a>
+      </li></ul>
+    
+      <div class="menu-copyright">Zcutie</div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Android系统之开机亮度需求</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>April 06, 2023</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>6640</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+        <p>修改Android开机动画结束后到加载Launcher页面时android加载条出现亮度变化问题<br>一开始从上层入手，怀疑有app或者窗口对其进行了修改</p>
+<h1 id="追踪代码方法"><a href="#追踪代码方法" class="headerlink" title="追踪代码方法"></a>追踪代码方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//打印堆栈信息查看调用者</span><br>android.util.Log.i(TAG,<span class="hljs-string">&quot;updateDisplayPowerStateLocked() &quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Throwable</span>());<br></code></pre></td></tr></table></figure>
+
+<h1 id="传统方式"><a href="#传统方式" class="headerlink" title="传统方式"></a>传统方式</h1><p>一般的亮度修改，要么是调用Window中的方法进行修改，要么是写入系统值中，所以第一阶段想到该方案<br>1.Window.setAttributes方法修改亮度</p>
+<p>frameworks\base\core\java\android\view\Window.java</p>
+<p>对该文件中setAttributes方法打印Log</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setAttributes</span><span class="hljs-params">(WindowManager.LayoutParams a)</span> &#123;<br>        mWindowAttributes.copyFrom(a);<br>        dispatchWindowAttributesChanged(mWindowAttributes);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>2.应用设置亮度时Settings.System.SCREEN_BRIGHTNESS值，所以决定在Settings中对属性值进行putInt时打印Log</p>
+<p>\frameworks\base\core\java\android\provider</p>
+<p>通过追加日志的方式来获取谁调用、设置了亮度</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">putInt</span><span class="hljs-params">(ContentResolver cr, String name, <span class="hljs-type">int</span> value)</span> &#123;<br>            <span class="hljs-keyword">return</span> putString(cr, name, Integer.toString(value));<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>但对于开机亮度值的改变，以上两处地方皆没有进行修改，所以得出结论与上层应用无关，将目光放置到framework层，怀疑为系统对其进行了修改，所以第二阶段在framework中追踪代码。</p>
+<h1 id="背光渐变"><a href="#背光渐变" class="headerlink" title="背光渐变"></a>背光渐变</h1><p>网上搜索了一下相关的问题，有查看到MTK背光问题处理，于是乎顺着文章定位到DisplayPowerController</p>
+<p>frameworks\base\services\core\java\com\android\server\display\DisplayPowerController.java</p>
+<p>其中的animateScreenBrightness()函数，作用是处理开机时亮度渐变，定位到调用该方法的函数updatePowerState()</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">updatePowerState</span><span class="hljs-params">()</span> &#123;<br>	...<br>	<span class="hljs-keyword">if</span> (initialRampSkip || hasBrightnessBuckets<br>                      || wasOrWillBeInVr || !isDisplayContentVisible || brightnessIsTemporary) &#123;<br>                  animateScreenBrightness(brightness, <span class="hljs-number">0</span>);<br>              &#125; <span class="hljs-keyword">else</span> &#123;<br>                  animateScreenBrightness(brightness,<br>                          slowChange ? mBrightnessRampRateSlow : mBrightnessRampRateFast);<br>              &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>根据网上方法将else中的animateScreenBrightness改成与if一致</p>
+<p>然而得到的结果只是将亮度渐变时间变快，仍旧会有亮度的变化，只是时间快慢问题，没有找到根源</p>
+<p>framework中修改方案<br>虽然对DisplayPowerController中的animateScreenBrightness进行修改后没有效果，但是通过对updatePowerState打印堆栈信息，最终定位到DisplayManagerService.java、PowerManagerService.java两个文件当中，当然，由于要找到根源，所以也涉及到了LightsService.java这个文件</p>
+<p>PowerManagerService.java<br>updateDisplayPowerStateLocked<br>核心函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">updateDisplayPowerStateLocked</span><span class="hljs-params">(<span class="hljs-type">int</span> dirty)</span> &#123;<br>	...<br>	<span class="hljs-keyword">if</span> (!mBootCompleted) &#123;<br>		<span class="hljs-comment">// Keep the brightness steady during boot. This requires the</span><br>        <span class="hljs-comment">// bootloader brightness and the default brightness to be identical.</span><br>        autoBrightness = <span class="hljs-literal">false</span>;<br>        screenBrightnessOverride = mScreenBrightnessSettingDefault;<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isValidBrightness(mScreenBrightnessOverrideFromWindowManager)) &#123;<br>        	autoBrightness = <span class="hljs-literal">false</span>;<br>            screenBrightnessOverride = mScreenBrightnessOverrideFromWindowManager;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            autoBrightness = (mScreenBrightnessModeSetting == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);<br>        	screenBrightnessOverride = -<span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-comment">//Update display power request</span><br>        mDisplayPowerRequest.screenBrightnessOverride = screenBrightnessOverride;<br>        ...<br>        mDisplayRead = mDisplayManagerInternal.requestPowerState(mDisplayPowerRequest,mRequestWaitForNegativeProximity);<span class="hljs-comment">//调用DisplayManagerService</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="DisplayManagerService-java"><a href="#DisplayManagerService-java" class="headerlink" title="DisplayManagerService.java"></a>DisplayManagerService.java</h2><p>在该文件中有一个重要的变量：mGlobalDisplayBrightness，顾名思义，全局亮度值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//定义</span><br><span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">mGlobalDisplayBrightness</span> <span class="hljs-operator">=</span> PowerManager.BRIGHTNESS_DEFAULT;<br><span class="hljs-comment">//第一次赋值</span><br>mGlobalDisplayBrightness = pm.getDefaultScreenBrightnessSetting();<br></code></pre></td></tr></table></figure>
+
+<p>因为在第一次赋值时调用了pm进行赋值，所以传给下层的亮度值为系统默认值，而非用户设置值，从而导致开机加载完毕，加载桌面时出现亮度变化</p>
+<h3 id="updateDisplayStateLocked"><a href="#updateDisplayStateLocked" class="headerlink" title="updateDisplayStateLocked"></a>updateDisplayStateLocked</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> Runnable <span class="hljs-title function_">updateDisplayStateLocked</span><span class="hljs-params">(DisplayDevice device)</span> &#123;<br>        <span class="hljs-comment">// Blank or unblank the display immediately to match the state requested</span><br>        <span class="hljs-comment">// by the display power controller (if known).</span><br>        <span class="hljs-type">DisplayDeviceInfo</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> device.getDisplayDeviceInfoLocked();<br>        <span class="hljs-keyword">if</span> ((info.flags &amp; DisplayDeviceInfo.FLAG_NEVER_BLANK) == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">//第一次传亮度值，采取默认值传递</span><br>            <span class="hljs-keyword">return</span> device.requestDisplayStateLocked(mGlobalDisplayState, mGlobalDisplayBrightness);<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="LocalDisplayAdapter-java"><a href="#LocalDisplayAdapter-java" class="headerlink" title="LocalDisplayAdapter.java"></a>LocalDisplayAdapter.java</h2><p>在开机时，添加设备阶段，就注册且绑定了LocalDisplayAdapter，在DisplayManagerService中对其进行引用，调用其requestDisplayStateLocked方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Runnable <span class="hljs-title function_">requestDisplayStateLocked</span><span class="hljs-params">(<span class="hljs-keyword">final</span> <span class="hljs-type">int</span> state, <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> brightness)</span> &#123;<br>	...<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Runnable</span>()&#123;<br>		...<br>		<span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setDisplayBrightness</span><span class="hljs-params">(<span class="hljs-type">int</span> brightness)</span> &#123;<br>			...<br>			<span class="hljs-keyword">try</span>&#123;<br>			mBacklight.setBrightness(brightness);<br>			&#125;<br>		&#125;	<br>	&#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="LightsService-java"><a href="#LightsService-java" class="headerlink" title="LightsService.java"></a>LightsService.java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LightImpl</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Light</span> &#123;<br>	...<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-comment">//为LocalDisplayAdapter所调用</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setBrightness</span><span class="hljs-params">(<span class="hljs-type">int</span> brightness)</span> &#123;<br>		setBrightness(brightness,BRIGHTNESS_MODE_USER);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setBrightness</span><span class="hljs-params">(<span class="hljs-type">int</span> brightness, <span class="hljs-type">int</span> brightnessMode)</span> &#123;<br>	<span class="hljs-keyword">synchronized</span>(<span class="hljs-built_in">this</span>) &#123;<br>		...<br>		setLightLocked(color,LIGHT_FLASH_NONE,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,brightnessMode);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setLightsLocked</span><span class="hljs-params">(<span class="hljs-type">int</span> color, <span class="hljs-type">int</span> mode, <span class="hljs-type">int</span> onMS, <span class="hljs-type">int</span> offMS, <span class="hljs-type">int</span> brightnessMode)</span>&#123;<br>	...<br>	<span class="hljs-keyword">if</span> (!mInitialized || color != mColor || mode != mMode || onMS != mOnMS || bambchanged || offMS != mOffMS || mBrightnessMode != brightnessMode)&#123;<br>		...<br>		<span class="hljs-keyword">try</span>&#123;<br>			<span class="hljs-comment">//该处是上层调用native函数，将值传给驱动层</span><br>			setLight_native(mId,color,mode,onMS,offMS,brightnessMode);<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>原本是想在DisplayManagerService中对用户设置的亮度值进行获取再设置，但是在此java文件中添加System.getInt或者getIntForUser，刷机时都会报错，导致开不了机</p>
+<p>所以想到两种方案<br>一是修改系统默认值，使得第一次开机亮度最大化<br>二是在修改完后写入到metazone中，在驱动层开机时进行读取</p>
+<p>由于只想修改上层而不动驱动，所以采取了第一种方法，但是该方法仍存在问题</p>
+<h2 id="最终解决方案"><a href="#最终解决方案" class="headerlink" title="最终解决方案"></a>最终解决方案</h2><p>将SettingsProvider中的默认值进行修改，修改完之后，刷机验证，正常<br>通过日志知道，在没有更改任何条件的情况下，值会从255渐变到102，所以也就意味着一开始的值设定的就是40%，即102</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- Default screen brightness, from 0 to 255.  102 is 40%. --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">integer</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;def_screen_brightness&quot;</span>&gt;</span>255<span class="hljs-tag">&lt;/<span class="hljs-name">integer</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h2><p>虽然修改了默认值，在开机的情况下已经不会在出现该亮度变化的问题，但是在测试时发现，如果将android亮度调节至最暗，再次开机会出现由最亮到最暗的动画过渡，其实这种现象是属于一方案代码修改后的正常变化范围</p>
+<p>然而所要达到的效果是开机过程中不再有任何的亮度变化，所以就需要在开机第一时间将亮度设置为用户设置的值，在修改整个问题的过程中，其实一直在kernel层的接收亮度文件中进行修改，但通过追加日志发现，该处与framework层修改默认值的效果一致，即不能完全将整个开机过程的亮度进行囊括</p>
+<p>后来查阅MTK资料，发现在arm2中已经进行了修改，也就是达到了开关背光一致性，即关机前设置的亮度，会在开机的那一刻就设置同等的亮度值，在整个开机过程中不会再有变化</p>
+<p>发现是要通过写入metazone，供设备在开机时读取metazone来实现该功能</p>
+<p>其实在没有深入arm2时，也考虑到是否可以通过写入metazone来确保开机时就保证亮度一致，但由于一直卡在kernel层，导致写入metazone也无法实现，因为通过串口日志以及adb对比，在kernel\drivers\misc\mediatek\leds\的leds.c文件中，亮度值的设定实际上就是开机动画完成后到加载Launcher前的一个亮度设置</p>
+<p>所以综上，我调节的系统并没有实现开关背光一致性功能，后续也通过追踪代码，对arm2中display目录下的mt_led.c中代码进行比对，确实存在开机将亮度拉到最大值的函数设定，从而破坏了开关背光一致性功能</p>
+<p>对c不是很熟悉，但是理清了一下思路：<br>1、在开机的时候，系统还未启动，所以系统服务中的一些设定是不管用的，要在开机的时候就读取到亮度值，只有写入到metazone中<br>2、顺着思路找到arm2开机文件设置亮度的地方，看看是否实现了读取保存的亮度值</p>
+<p>通过以上两点找到对应的led文件，果然，去除掉了读取metazone部分，且值固定为最大值，即无论你关机前设置的亮度是多少，都会在开机的时候通通拉到最高</p>
+<h3 id="mt-led-c"><a href="#mt-led-c" class="headerlink" title="mt_led.c"></a>mt_led.c</h3><h4 id="mt65xx-backlight-on-void"><a href="#mt65xx-backlight-on-void" class="headerlink" title="mt65xx_backlight_on(void)"></a>mt65xx_backlight_on(void)</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mt65xx_backlight_on</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> First_SetBacklight = <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span>(First_SetBacklight == <span class="hljs-number">1</span>) &#123;<br>		First_SetBacklight = <span class="hljs-number">0</span>;<br>		<span class="hljs-built_in">mt65xx_leds_brightness_set</span>(MT65XX_LED_TYPE_LCD, LED_FULL);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>Zcutie</li>
+    <li><strong>本文链接：</strong><a href="http://zcutie.top/archives/327c0f33.html" title="http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;327c0f33.html">http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;327c0f33.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9C%80%E6%B1%82/" rel="tag">需求</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/archives/8e1dee1.html"><i class="iconfont iconleft"></i>Android替换系统默认字体</a>
+    <a href="/archives/48670.html">Android Settings源码学习<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+        <section class="comments">
+  
+    <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "W2WK3aaVLTRFMfYYo9SfMGA1-gzGzoHsz",
+        app_key: "O5nq0oeKoFAgxU27EilJ4cXR",
+        placeholder: "雁过留痕",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%BD%E8%B8%AA%E4%BB%A3%E7%A0%81%E6%96%B9%E6%B3%95"><span class="toc-text">追踪代码方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F"><span class="toc-text">传统方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E5%85%89%E6%B8%90%E5%8F%98"><span class="toc-text">背光渐变</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DisplayManagerService-java"><span class="toc-text">DisplayManagerService.java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#updateDisplayStateLocked"><span class="toc-text">updateDisplayStateLocked</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalDisplayAdapter-java"><span class="toc-text">LocalDisplayAdapter.java</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LightsService-java"><span class="toc-text">LightsService.java</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">最终解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="toc-text">遗留问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mt-led-c"><span class="toc-text">mt_led.c</span></a></li></ol></li></ol></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=460892649 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="/images/qrcode.png "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://github.com/Zcutie "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:Zcutie0201@outlook.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  <div class="footer-copyright">
+    
+                &copy; 2023
+            
+            Zcutie
+  </div>
+  <br/>
+  <div style="text-align:center">
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("01/30/2023 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "🚀 &nbsp 已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
+
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+    <div class="fab fab-daovoice">
+      <i class="iconfont iconcomment"></i>
+    </div>
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+    <div class="search">
+  <div class="search-container">
+    <div class="search-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <div class="search-input-wrapper">
+      <i class="search-input-icon iconfont iconsearch"></i>
+      <input class="search-input" type="search" id="search-input" placeholder="Search..." autofocus autocomplete="off"
+        autocorrect="off" autocapitalize="off">
+    </div>
+    <div class="search-output" id="search-output"></div>
+  </div>
+</div>
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", "https://widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "bab1a4b0"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

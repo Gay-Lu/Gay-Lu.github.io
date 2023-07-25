@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html>
+<html lang="en" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>系统按键音处理流程 - Zcutie</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  
+  <meta name="description" content="声音系统按键音处理流程
+因为系统关闭了按键提示音，但目...">
+  <meta name="author" content="Zcutie">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-192x192.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="https://at.alicdn.com/t/font_1445822_p6ry5n7lrr.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      loading: {
+        gif: '/images/theme/loading.gif',
+        lottie: ''
+      },
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: {
+          gif: '/images/theme/loading.gif',
+          lottie: ''
+        }
+      },
+      donate: {
+        enable: false,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '高山仰止，景行行止',
+          typing: true,
+          api: 'https://v2.jinrishici.com/one.json',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: '/images/qrcode.png',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: true,
+        path: 'search.xml'
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="lock-screen">
+  <div class="loading" id="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+        <i class="iconfont iconsearch j-navbar-search"></i>
+      
+    </div>
+    <div class="center">系统按键音处理流程</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 相册</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 关于</a>
+      </li><li class="menu-item">
+        <a href="/links/ " class="underline "> 友链</a>
+      </li></ul>
+    
+      <div class="menu-copyright">Zcutie</div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">系统按键音处理流程</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>July 21, 2023</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>7002</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        
+          <p>修改Android系统8.1对触摸提示音的开启</p>
+        
+        <h1 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h1><p>系统按键音处理流程</p>
+<p>因为系统关闭了按键提示音，但目前需求又需要开放</p>
+<h2 id="相关文件查找"><a href="#相关文件查找" class="headerlink" title="相关文件查找"></a>相关文件查找</h2><h3 id="布局文件"><a href="#布局文件" class="headerlink" title="布局文件"></a>布局文件</h3><p>通过代码搜索“触摸提示音”，找到string对应的名称:“touch_sounds_title”，最后将文件定位到other_sound_settings.xml以及sound_settings.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- Touch sounds --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">SwitchPreference</span></span><br><span class="hljs-tag">          <span class="hljs-attr">android:key</span>=<span class="hljs-string">&quot;touch_sounds&quot;</span></span><br><span class="hljs-tag">          <span class="hljs-attr">android:title</span>=<span class="hljs-string">&quot;@string/touch_sounds_title&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="java文件"><a href="#java文件" class="headerlink" title="java文件"></a>java文件</h3><p>通过touch_sounds定位到文件TouchSoundPreferenceController.java</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><h3 id="安卓设置中声音部分开启"><a href="#安卓设置中声音部分开启" class="headerlink" title="安卓设置中声音部分开启"></a>安卓设置中声音部分开启</h3><p>通过ARDC开启监测，定位到当前页面内的activity</p>
+<p><img   class="lazyload" data-original="/images/article/touch_sound_effect/image-20230721113110142.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p>MtkSettings&#x2F;AndroidManifest.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">activity</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;Settings$SoundSettingsActivity&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:label</span>=<span class="hljs-string">&quot;@string/sound_settings&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:icon</span>=<span class="hljs-string">&quot;@drawable/ic_homepage_sound&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:exported</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:taskAffinity</span>=<span class="hljs-string">&quot;com.android.settings&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">android:parentActivityName</span>=<span class="hljs-string">&quot;Settings&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span> <span class="hljs-attr">android:priority</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.SOUND_SETTINGS&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.settings.SOUND_SETTINGS&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.settings.ACTION_OTHER_SOUND_SETTINGS&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.category.DEFAULT&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.category.DEFAULT&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.category.VOICE_LAUNCH&quot;</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.SHORTCUT&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span> <span class="hljs-attr">android:priority</span>=<span class="hljs-string">&quot;6&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.action.SETTINGS&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.category&quot;</span></span><br><span class="hljs-tag">                       <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;com.android.settings.category.ia.homepage&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.FRAGMENT_CLASS&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;com.android.settings.notification.SoundSettings&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.PRIMARY_PROFILE_CONTROLLED&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.summary&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:resource</span>=<span class="hljs-string">&quot;@string/sound_dashboard_summary&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">activity</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.android.settings.FRAGMENT_CLASS&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:value</span>=<span class="hljs-string">&quot;com.android.settings.notification.SoundSettings&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>点击会跳转至该页面(fragment)，也就是SoundSettings页面</p>
+<p>里面有各种声音相关的设置，其中TouchSoundPreferenceController就是触摸提示音相关</p>
+<h4 id="TouchSoundPreferenceController"><a href="#TouchSoundPreferenceController" class="headerlink" title="TouchSoundPreferenceController"></a>TouchSoundPreferenceController</h4><p>Settings&#x2F;src&#x2F;com&#x2F;android&#x2F;settings&#x2F;notification&#x2F;TouchSoundPreferenceController.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">TouchSoundPreferenceController</span><span class="hljs-params">(Context context, SettingsPreferenceFragment parent,</span><br><span class="hljs-params">            Lifecycle lifecycle)</span> &#123;<br>        <span class="hljs-built_in">super</span>(context, parent, lifecycle);<br>        mPreference = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SettingPref</span>(<br>            TYPE_SYSTEM, KEY_TOUCH_SOUNDS, System.SOUND_EFFECTS_ENABLED, DEFAULT_ON) &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">protected</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">setSetting</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Context context, <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> value)</span> &#123;<br>                AsyncTask.execute(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Runnable</span>() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>                        <span class="hljs-keyword">final</span> <span class="hljs-type">AudioManager</span> <span class="hljs-variable">am</span> <span class="hljs-operator">=</span><br>                            (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);<br>                        <span class="hljs-keyword">if</span> (value != <span class="hljs-number">0</span>) &#123;<br>                            am.loadSoundEffects();<br>                        &#125; <span class="hljs-keyword">else</span> &#123;<br>                            am.unloadSoundEffects();<br>                        &#125;<br>                    &#125;<br>                &#125;);<br>                <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.setSetting(context, value);<br>            &#125;<br>        &#125;;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>先对System属性值赋值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">mPreference = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SettingPref</span>(<br>            TYPE_SYSTEM, KEY_TOUCH_SOUNDS, System.SOUND_EFFECTS_ENABLED, DEFAULT_ON)&#123;&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>PS:使用adb获取按键提示音的状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">adb shell settings get system sound_effects_enabled<br></code></pre></td></tr></table></figure>
+
+<p>监听按键的变化，来选择加载以及关闭提示音</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">am.loadSoundEffects();<br>am.unloadSoundEffects();<br></code></pre></td></tr></table></figure>
+
+<p>进入framework层，调用系统服务等</p>
+<h3 id="framework"><a href="#framework" class="headerlink" title="framework"></a>framework</h3><p>framework\base\media\java\android\media\AudioManager.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">loadSoundEffects</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">final</span> <span class="hljs-type">IAudioService</span> <span class="hljs-variable">service</span> <span class="hljs-operator">=</span> getService();<span class="hljs-comment">//获取AudioService对象</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            service.loadSoundEffects();<span class="hljs-comment">//调用AudioService中方法</span><br>        &#125; <span class="hljs-keyword">catch</span> (RemoteException e) &#123;<br>            <span class="hljs-keyword">throw</span> e.rethrowFromSystemServer();<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> IAudioService <span class="hljs-title function_">getService</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (sService != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> sService;<br>        &#125;<br>        <span class="hljs-type">IBinder</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> ServiceManager.getService(Context.AUDIO_SERVICE);<span class="hljs-comment">//通过binder调用AudioService</span><br>        sService = IAudioService.Stub.asInterface(b);<br>        <span class="hljs-keyword">return</span> sService;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>framework\base\services\core\java\com\android\server\audio\AudioService.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">loadSoundEffects</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">attempts</span> <span class="hljs-operator">=</span> <span class="hljs-number">3</span>;<br>        <span class="hljs-type">LoadSoundEffectReply</span> <span class="hljs-variable">reply</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">LoadSoundEffectReply</span>();<br><br>        <span class="hljs-keyword">synchronized</span> (reply) &#123;<br>            sendMsg(mAudioHandler, MSG_LOAD_SOUND_EFFECTS, SENDMSG_QUEUE, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, reply, <span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">while</span> ((reply.mStatus == <span class="hljs-number">1</span>) &amp;&amp; (attempts-- &gt; <span class="hljs-number">0</span>)) &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    reply.wait(SOUND_EFFECTS_LOAD_TIMEOUT_MS);<br>                &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                    Log.w(TAG, <span class="hljs-string">&quot;loadSoundEffects Interrupted while waiting sound pool loaded.&quot;</span>);<br>                    Thread.currentThread().interrupt();<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> (reply.mStatus == <span class="hljs-number">0</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>发送广播</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">sendMsg(mAudioHandler, MSG_LOAD_SOUND_EFFECTS, SENDMSG_QUEUE, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, reply, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+
+<p>内部处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AudioHandler</span> extend Handler&#123;<br>	...<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleMessage</span><span class="hljs-params">(Message msg)</span>&#123;<br>		<span class="hljs-keyword">switch</span>(msg.what)&#123;<br>			<span class="hljs-keyword">case</span> MSG_LOAD_SOUND_EFFECTS:<br>				<span class="hljs-type">boolean</span> <span class="hljs-variable">loaded</span> <span class="hljs-operator">=</span> onLoadSoundEffects();<span class="hljs-comment">//调用方法，加载音效</span><br>                    <span class="hljs-keyword">if</span> (msg.obj != <span class="hljs-literal">null</span>) &#123;<br>                        <span class="hljs-type">LoadSoundEffectReply</span> <span class="hljs-variable">reply</span> <span class="hljs-operator">=</span> (LoadSoundEffectReply)msg.obj;<br>                        <span class="hljs-keyword">synchronized</span> (reply) &#123;<br>                            reply.mStatus = loaded ? <span class="hljs-number">0</span> : -<span class="hljs-number">1</span>;<br>                            reply.notify();<br>                        &#125;<br>                    &#125;<br>                    <span class="hljs-keyword">break</span>;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>同时也就是在这里，我找到了处理播放音效的方法，之前一直对System.SOUND_EFFECTS_ENABLED赋值不起作用，是该处将onPlaySoundEffect方法进行了屏蔽，放开，编译，刷机，成功，而且默认就是开启的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> MSG_PLAY_SOUND_EFFECT:<br>	onPlaySoundEffect(msg.arg1,msg.arg2);<br></code></pre></td></tr></table></figure>
+
+<p>至于为什么会关闭&#x2F;隐藏该方法，之前合入三方应用的时候提过这个bug，开启之后会与其他应用冲突，所以选择了隐藏，触摸提示音时不走该方法</p>
+<h1 id="待定"><a href="#待定" class="headerlink" title="待定"></a>待定</h1>
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>Zcutie</li>
+    <li><strong>本文链接：</strong><a href="http://zcutie.top/archives/e4af00e1.html" title="http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;e4af00e1.html">http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;e4af00e1.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Settings/" rel="tag">Settings</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/archives/b5d2d466.html"><i class="iconfont iconleft"></i>Hexo博客文章设置</a>
+    <a href="/archives/539913bf.html">个人账号汇总<i class="iconfont iconright"></i></a>
+  </nav>
+
+      </section>
+      
+        <section class="comments">
+  
+    <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "W2WK3aaVLTRFMfYYo9SfMGA1-gzGzoHsz",
+        app_key: "O5nq0oeKoFAgxU27EilJ4cXR",
+        placeholder: "雁过留痕",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A3%B0%E9%9F%B3"><span class="toc-text">声音</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE"><span class="toc-text">相关文件查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B1%80%E6%96%87%E4%BB%B6"><span class="toc-text">布局文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java%E6%96%87%E4%BB%B6"><span class="toc-text">java文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="toc-text">流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%8D%93%E8%AE%BE%E7%BD%AE%E4%B8%AD%E5%A3%B0%E9%9F%B3%E9%83%A8%E5%88%86%E5%BC%80%E5%90%AF"><span class="toc-text">安卓设置中声音部分开启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#framework"><span class="toc-text">framework</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%85%E5%AE%9A"><span class="toc-text">待定</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=460892649 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="/images/qrcode.png "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://github.com/Zcutie "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:Zcutie0201@outlook.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#FF3B00" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  <div class="footer-copyright">
+    
+                &copy; 2023
+            
+            Zcutie
+  </div>
+  <br/>
+  <div style="text-align:center">
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("01/30/2023 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "🚀 &nbsp 已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
+
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+    <div class="fab fab-daovoice">
+      <i class="iconfont iconcomment"></i>
+    </div>
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+    <div class="search">
+  <div class="search-container">
+    <div class="search-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <div class="search-input-wrapper">
+      <i class="search-input-icon iconfont iconsearch"></i>
+      <input class="search-input" type="search" id="search-input" placeholder="Search..." autofocus autocomplete="off"
+        autocorrect="off" autocapitalize="off">
+    </div>
+    <div class="search-output" id="search-output"></div>
+  </div>
+</div>
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+  
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", "https://widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "bab1a4b0"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
