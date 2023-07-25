@@ -205,7 +205,7 @@
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>July 22, 2023</span>
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>435</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>599</span>
     </div>
   </div>
 </section>
@@ -242,7 +242,15 @@
 <p>keywords: , ,</p>
 <p>新建文章页面</p>
 <p>hexo new “名称”</p>
-<p>可以新建，直接放置在source文件夹下</p>
+<h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><p>address already in use :::4000</p>
+<p><img    class="lazyload" data-original="/images/article/Hexo/image-20230725150126962.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">image-20230725150126962</span></p>
+<p>端口被占用</p>
+<p>打开cmd，查看进程号pid</p>
+<p><strong>netstat -ano|findstr “4000”</strong></p>
+<p><img    class="lazyload" data-original="/images/article/Hexo/image-20230725150335638.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="   ><span class="image-caption">image-20230725150335638</span></p>
+<p>查看对应应用，关闭进程，或者将hexo端口号修改</p>
+<p>hexo server -p xxxx</p>
+<p>xxxx:新端口号</p>
 
       </section>
       <section class="extra">
