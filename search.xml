@@ -22,6 +22,18 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Android系统之开机亮度需求</title>
+    <url>/archives/327c0f33.html</url>
+    <content><![CDATA[<p>修改Android开机动画结束后到加载Launcher页面时android加载条出现亮度变化问题<br>一开始从上层入手，怀疑有app或者窗口对其进行了修改</p>
+<h1 id="追踪代码方法"><a href="#追踪代码方法" class="headerlink" title="追踪代码方法"></a>追踪代码方法</h1><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//打印堆栈信息查看调用者</span><br>android.util.Log.i(TAG,<span class="hljs-string">&quot;updateDisplayPowerStateLocked() &quot;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Throwable</span>());<br></code></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Android</tag>
+        <tag>需求</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android SystemUI之Recents近期任务部分</title>
     <url>/archives/86ca21a1.html</url>
     <content><![CDATA[<ul>
@@ -139,6 +151,7 @@
 <p>keywords: , ,</p>
 <p>新建文章页面</p>
 <p>hexo new “名称”</p>
+<p>可以新建，直接放置在source文件夹下</p>
 ]]></content>
       <tags>
         <tag>博客</tag>
