@@ -22,6 +22,24 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Win11右键改成Win10</title>
+    <url>/archives/c9b62394.html</url>
+    <content><![CDATA[<p>win+R唤醒，输入regedit唤出注册表</p>
+<p><img  src="/images/article/Windows/image-20230809173952851.png"  ><span class="image-caption">image-20230809173952851</span></p>
+<p>找到HKEY_CURRENT_USER&#x2F;Software&#x2F;Classes&#x2F;CLSID</p>
+<p>新建项，命名：{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}</p>
+<p>在{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}中再新建项，命名InprocServer32</p>
+<p><img  src="/images/article/Windows/image-20230809174428590.png"  ><span class="image-caption">image-20230809174428590</span></p>
+<p>双击默认，弹出框，直接点确认</p>
+<p><img  src="/images/article/Windows/image-20230809174514035.png"  ><span class="image-caption">image-20230809174514035</span></p>
+<p><img  src="/images/article/Windows/image-20230809174546907.png"  ><span class="image-caption">image-20230809174546907</span></p>
+<p>重启电脑，恢复成win10右键</p>
+]]></content>
+      <tags>
+        <tag>Windows11</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo zhaoo主题配置修改</title>
     <url>/archives/f28a5207.html</url>
     <content><![CDATA[]]></content>
@@ -70,6 +88,31 @@
       <tags>
         <tag>博客</tag>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 替换MtkSystemUI并预置第三方应用为系统应用</title>
+    <url>/archives/dd4a22ca.html</url>
+    <content><![CDATA[<h1 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h1><p>预置第三方提供SystemUI替换Mtk平台的MtkSystemUI</p>
+<p>没有源码，但应用已签名，所以只需要将其放在源码中，并且修改Android.mk文件即可</p>
+<p>1.找到MtkSystemUI所在的位置，将SystemUI改成MtkSystemUI(平台编译之后的名字)</p>
+<p><img src="/images/article/SystemUI/image-20230729115048338.png"></p>
+<p>2.修改Android.mk文件</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><code class="hljs makefile">LOCAL_PATH := <span class="hljs-variable">$(<span class="hljs-built_in">call</span> my-<span class="hljs-built_in">dir</span>)</span><br><span class="hljs-keyword">include</span> <span class="hljs-variable">$(CLEAR_VARS)</span><br><br><span class="hljs-comment"># Module name should match apk name to be installed</span><br>LOCAL_MODULE := MtkSystemUI<br>LOCAL_MODULE_TAGS := optional<br>LOCAL_SRC_FILES := <span class="hljs-variable">$(LOCAL_MODULE)</span>.apk<br>LOCAL_OVERRIDES_PACKAGES := SystemUI<br>LOCAL_MODULE_CLASS := APPS<br>LOCAL_MODULE_SUFFIX := <span class="hljs-variable">$(COMMON_ANDROID_PACKAGE_SUFFIX)</span><br>LOCAL_CERTIFICATE := platform<br>LOCAL_ENFORCE_USES_LIBRARIES := false<br>LOCAL_DEX_PREOPT:= false<br>LOCAL_PRIVATE_PLATFORM_APIS := true<br>LOCAL_PRIVILEGED_MODULE := true<br>LOCAL_MODULE_PATH := <span class="hljs-variable">$(TARGET_OUT)</span>/priv-app<br><span class="hljs-keyword">include</span> <span class="hljs-variable">$(BUILD_PREBUILT)</span><br></code></pre></td></tr></table></figure>
+
+<p>原本是对照系统内原生的三方进行修改，后来编译不成功，又对照着系统应用：Settings的Android.mk文件修改，添加如下：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><code class="hljs makefile">LOCAL_PRIVATE_PLATFORM_APIS := true<br><span class="hljs-comment">#没有加上这条之前，虽然成功编译到了/system/priv-app/中，但没有生效，通过追加日志发现在包名检测的时候跳过该应用</span><br>LOCAL_PRIVILEGED_MODULE := true<br><span class="hljs-comment">#原来是LOCAL_CERTIFICATE := PRESIGNED，但是提供的apk采用的是我们的签名，所以需要更换</span><br>LOCAL_CERTIFICATE := platform<br></code></pre></td></tr></table></figure>
+
+<p>验证单编：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><code class="hljs makefile">删除原来的apk以及库，以防止新的修改未生效<br>find ./out/target/product/../ -name <span class="hljs-string">&quot;MtkSystemUI*&quot;</span> | xargs rm -rf<br>make MtkSystemUI -j32<br>发现编译成功，对新编译的apk进行AndroidManifest.xml查看，与提供的apk一致<br></code></pre></td></tr></table></figure>
+
+<p>验证全编：</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><code class="hljs makefile">保存修改，防止全编时代码还原<br>git add /SystemUI/<br>刷机，成功替换<br></code></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Android</tag>
+        <tag>SystemUI</tag>
       </tags>
   </entry>
   <entry>
@@ -155,6 +198,26 @@
 ]]></content>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android 优化SystemUI下拉状态栏时图标的隐藏与显示</title>
+    <url>/archives/f150b502.html</url>
+    <content><![CDATA[<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>下拉状态栏时，home键、back键、recent键、hidebar以及自定义图标不会进行隐藏，仍旧出现在下拉状态栏的两侧</p>
+<p>涉及文件：<br>CollapsedStatusBarFragment.java<br>代码地址：<br>SystemUI\src\com\android\systemui\statusbar\phone\CollapsedStatusBarFragment.java</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="原生基础上进行修改"><a href="#原生基础上进行修改" class="headerlink" title="原生基础上进行修改"></a>原生基础上进行修改</h2><p>onViewCreated中获取图标，比如home键、back键以及recent按键，安卓原生没有对其进行处理，只对clock进行了处理</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br>      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onViewCreated</span><span class="hljs-params">(View view, <span class="hljs-meta">@Nullable</span> Bundle savedInstanceState)</span> &#123;<br>          <span class="hljs-built_in">super</span>.onViewCreated(view, savedInstanceState);<br>          mStatusBar = (PhoneStatusBarView) view;<br>          <span class="hljs-keyword">if</span> (savedInstanceState != <span class="hljs-literal">null</span> &amp;&amp; savedInstanceState.containsKey(EXTRA_PANEL_STATE)) &#123;<br>              mStatusBar.restoreHierarchyState(<br>                      savedInstanceState.getSparseParcelableArray(EXTRA_PANEL_STATE));<br>          &#125;<br>          mDarkIconManager = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DarkIconManager</span>(view.findViewById(R.id.statusIcons));<br>          mDarkIconManager.setShouldLog(<span class="hljs-literal">true</span>);<br>          Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);<br>          mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);<br>          mClockView = mStatusBar.findViewById(R.id.clock);<br>          <span class="hljs-comment">//add view for home back recent and hidebtn start</span><br>          mKeyHome = mStatusBar.findViewById(R.id.home);<br>          mKeyBack = mStatusBar.findViewById(R.id.back);<br>          mKeyRecent = mStatusBar.findViewById(R.id.recent);<br>          mKeyHideStatus = mStatusBar.findViewById(R.id.hide_bar);<br>          <span class="hljs-comment">//add view for home back recent and hidebtn end</span><br>          showSystemIconArea(<span class="hljs-literal">false</span>);<br>          showClock(<span class="hljs-literal">false</span>);<br>          initEmergencyCryptkeeperText();<br>          initOperatorName();<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="disable中进行图标的显示和隐藏"><a href="#disable中进行图标的显示和隐藏" class="headerlink" title="disable中进行图标的显示和隐藏"></a>disable中进行图标的显示和隐藏</h2><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br>      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">disable</span><span class="hljs-params">(<span class="hljs-type">int</span> displayId, <span class="hljs-type">int</span> state1, <span class="hljs-type">int</span> state2, <span class="hljs-type">boolean</span> animate)</span> &#123;<br>          <span class="hljs-keyword">if</span> (displayId != getContext().getDisplayId()) &#123;<br>              <span class="hljs-keyword">return</span>;<br>          &#125;<br>          state1 = adjustDisableFlags(state1);<br>          <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">old1</span> <span class="hljs-operator">=</span> mDisabled1;<br>          <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">diff1</span> <span class="hljs-operator">=</span> state1 ^ old1;<br>          mDisabled1 = state1;<br>          <span class="hljs-keyword">if</span> ((diff1 &amp; DISABLE_SYSTEM_INFO) != <span class="hljs-number">0</span>) &#123;<br>              <span class="hljs-keyword">if</span> ((state1 &amp; DISABLE_SYSTEM_INFO) != <span class="hljs-number">0</span>) &#123;<br>                  hideSystemIconArea(animate);<br>                  <span class="hljs-comment">//add for hiding status bar icon start</span><br>                  hideStatusBarKeys(animate);<br>                  <span class="hljs-comment">//add for hiding status bar icon end</span><br>                  hideOperatorName(animate);<br>              &#125; <span class="hljs-keyword">else</span> &#123;<br>                  showSystemIconArea(animate);<br>                  <span class="hljs-comment">//add for showing status bar icon start</span><br>                  showStatusBarKeys(animate);<br>                  <span class="hljs-comment">//add for showing status bar icon end</span><br>                  showOperatorName(animate);<br>              &#125;<br>          &#125;<br>          ...<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="增加隐藏显示方法"><a href="#增加隐藏显示方法" class="headerlink" title="增加隐藏显示方法"></a>增加隐藏显示方法</h2><h3 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">hideStatusBarKeys</span><span class="hljs-params">(<span class="hljs-type">boolean</span> animate)</span> &#123;<br>        <span class="hljs-keyword">if</span> (mKeyHome != <span class="hljs-literal">null</span>) &#123;<br>            animateHide(mKeyHome, animate);<br>            animateHide(mKeyBack, animate);<br>            animateHide(mKeyRecent, animate);<br>			animateHide(mKeyHideStatus, animate);<br>			<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="显示"><a href="#显示" class="headerlink" title="显示"></a>显示</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">showStatusBarKeys</span><span class="hljs-params">(<span class="hljs-type">boolean</span> animate)</span> &#123;<br>        <span class="hljs-keyword">if</span> (mKeyHome != <span class="hljs-literal">null</span>) &#123;<br>            animateShow(mKeyHome, animate);<br>            animateShow(mKeyBack, animate);<br>            animateShow(mKeyRecent, animate);<br>			animateShow(mKeyHideStatus, animate);<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>Android</tag>
+        <tag>SystemUI</tag>
       </tags>
   </entry>
   <entry>

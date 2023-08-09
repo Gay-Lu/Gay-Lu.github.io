@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="baidu-site-verification" content="codeva-tZK9F1DJ66" />
-  <title>Hexo zhaoo主题配置修改 - Zcutie</title>
+  <title>Android 替换MtkSystemUI并预置第三方应用为系统应用 - Zcutie</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate" />
   
-  
+  <meta name="description" content="需求：预置第三方提供SystemUI替换Mtk平台的M...">
   <meta name="author" content="Zcutie">
   <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
   <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
@@ -155,7 +155,7 @@
         <i class="iconfont iconsearch j-navbar-search"></i>
       
     </div>
-    <div class="center">Hexo zhaoo主题配置修改</div>
+    <div class="center">Android 替换MtkSystemUI并预置第三方应用为系统应用</div>
     <div class="right">
       <i class="iconfont iconmenu j-navbar-menu"></i>
     </div>
@@ -203,35 +203,53 @@
     <section class="head">
   <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">Hexo zhaoo主题配置修改</h1>
+    <h1 class="head-title">Android 替换MtkSystemUI并预置第三方应用为系统应用</h1>
     <div class="head-info">
-      <span class="post-info-item"><i class="iconfont iconcalendar"></i>July 25, 2023</span>
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>July 22, 2023</span>
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>0</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1235</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
         
-        
+        <h1 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h1><p>预置第三方提供SystemUI替换Mtk平台的MtkSystemUI</p>
+<p>没有源码，但应用已签名，所以只需要将其放在源码中，并且修改Android.mk文件即可</p>
+<p>1.找到MtkSystemUI所在的位置，将SystemUI改成MtkSystemUI(平台编译之后的名字)</p>
+<p><img   class="lazyload" data-original="/images/article/SystemUI/image-20230729115048338.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p>2.修改Android.mk文件</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_PATH := <span class="hljs-variable">$(<span class="hljs-built_in">call</span> my-<span class="hljs-built_in">dir</span>)</span><br><span class="hljs-keyword">include</span> <span class="hljs-variable">$(CLEAR_VARS)</span><br><br><span class="hljs-comment"># Module name should match apk name to be installed</span><br>LOCAL_MODULE := MtkSystemUI<br>LOCAL_MODULE_TAGS := optional<br>LOCAL_SRC_FILES := <span class="hljs-variable">$(LOCAL_MODULE)</span>.apk<br>LOCAL_OVERRIDES_PACKAGES := SystemUI<br>LOCAL_MODULE_CLASS := APPS<br>LOCAL_MODULE_SUFFIX := <span class="hljs-variable">$(COMMON_ANDROID_PACKAGE_SUFFIX)</span><br>LOCAL_CERTIFICATE := platform<br>LOCAL_ENFORCE_USES_LIBRARIES := false<br>LOCAL_DEX_PREOPT:= false<br>LOCAL_PRIVATE_PLATFORM_APIS := true<br>LOCAL_PRIVILEGED_MODULE := true<br>LOCAL_MODULE_PATH := <span class="hljs-variable">$(TARGET_OUT)</span>/priv-app<br><span class="hljs-keyword">include</span> <span class="hljs-variable">$(BUILD_PREBUILT)</span><br></code></pre></td></tr></table></figure>
+
+<p>原本是对照系统内原生的三方进行修改，后来编译不成功，又对照着系统应用：Settings的Android.mk文件修改，添加如下：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile">LOCAL_PRIVATE_PLATFORM_APIS := true<br><span class="hljs-comment">#没有加上这条之前，虽然成功编译到了/system/priv-app/中，但没有生效，通过追加日志发现在包名检测的时候跳过该应用</span><br>LOCAL_PRIVILEGED_MODULE := true<br><span class="hljs-comment">#原来是LOCAL_CERTIFICATE := PRESIGNED，但是提供的apk采用的是我们的签名，所以需要更换</span><br>LOCAL_CERTIFICATE := platform<br></code></pre></td></tr></table></figure>
+
+<p>验证单编：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs makefile">删除原来的apk以及库，以防止新的修改未生效<br>find ./out/target/product/../ -name <span class="hljs-string">&quot;MtkSystemUI*&quot;</span> | xargs rm -rf<br>make MtkSystemUI -j32<br>发现编译成功，对新编译的apk进行AndroidManifest.xml查看，与提供的apk一致<br></code></pre></td></tr></table></figure>
+
+<p>验证全编：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs makefile">保存修改，防止全编时代码还原<br>git add /SystemUI/<br>刷机，成功替换<br></code></pre></td></tr></table></figure>
+
+
       </section>
       <section class="extra">
         
           <ul class="copyright">
   
     <li><strong>本文作者：</strong>Zcutie</li>
-    <li><strong>本文链接：</strong><a href="http://zcutie.top/archives/f28a5207.html" title="http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;f28a5207.html">http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;f28a5207.html</a></li>
+    <li><strong>本文链接：</strong><a href="http://zcutie.top/archives/dd4a22ca.html" title="http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;dd4a22ca.html">http:&#x2F;&#x2F;zcutie.top&#x2F;archives&#x2F;dd4a22ca.html</a></li>
     <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
   
 </ul>
         
         
         
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SystemUI/" rel="tag">SystemUI</a></li></ul> 
+
         
   <nav class="nav">
-    <a href="/archives/c9b62394.html"><i class="iconfont iconleft"></i>Win11右键改成Win10</a>
-    <a href="/archives/b5d2d466.html">Hexo博客文章设置<i class="iconfont iconright"></i></a>
+    <a href="/archives/b5d2d466.html"><i class="iconfont iconleft"></i>Hexo博客文章设置</a>
+    <a href="/archives/e4af00e1.html">系统按键音处理流程<i class="iconfont iconright"></i></a>
   </nav>
 
       </section>
@@ -277,7 +295,7 @@
           
   <aside class="toc-wrap">
     <h3 class="toc-title">文章目录：</h3>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%EF%BC%9A"><span class="toc-text">需求：</span></a></li></ol>
   </aside>
 
         
