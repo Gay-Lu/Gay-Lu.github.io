@@ -406,16 +406,19 @@
     <title>Win11右键改成Win10</title>
     <url>/archives/c9b62394.html</url>
     <content><![CDATA[<p>win+R唤醒，输入regedit唤出注册表</p>
-<p><img  src="/images/article/Windows/image-20230809173952851.png"  ><span class="image-caption">image-20230809173952851</span></p>
+<p><img src="/images/article/Windows/image-20230809173952851.png" alt="image-20230809173952851"></p>
 <p>找到HKEY_CURRENT_USER&#x2F;Software&#x2F;Classes&#x2F;CLSID</p>
 <p>新建项，命名：{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}</p>
 <p>在{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}中再新建项，命名InprocServer32</p>
-<p><img  src="/images/article/Windows/image-20230809174428590.png"  ><span class="image-caption">image-20230809174428590</span></p>
+<p><img src="/images/article/Windows/image-20230809174428590.png" alt="image-20230809174428590"></p>
 <p>双击默认，弹出框，直接点确认</p>
-<p><img  src="/images/article/Windows/image-20230809174514035.png"  ><span class="image-caption">image-20230809174514035</span></p>
-<p><img  src="/images/article/Windows/image-20230809174546907.png"  ><span class="image-caption">image-20230809174546907</span></p>
+<p><img src="/images/article/Windows/image-20230809174514035.png" alt="image-20230809174514035"></p>
+<p><img src="/images/article/Windows/image-20230809174546907.png" alt="image-20230809174546907"></p>
 <p>重启电脑，恢复成win10右键</p>
 ]]></content>
+      <categories>
+        <category>Windows系统</category>
+      </categories>
       <tags>
         <tag>Windows11</tag>
       </tags>
