@@ -353,11 +353,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo zhaoo主题配置修改</title>
-    <url>/archives/f28a5207.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>Android 优化SystemUI下拉状态栏时图标的隐藏与显示</title>
     <url>/archives/f150b502.html</url>
     <content><![CDATA[<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>下拉状态栏时，home键、back键、recent键、hidebar以及自定义图标不会进行隐藏，仍旧出现在下拉状态栏的两侧</p>
@@ -417,7 +412,7 @@
 <p>重启电脑，恢复成win10右键</p>
 ]]></content>
       <categories>
-        <category>Windows系统</category>
+        <category>Windows系统优化</category>
       </categories>
       <tags>
         <tag>Windows11</tag>
