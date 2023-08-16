@@ -17,8 +17,8 @@
   <meta name="keywords" content="">
   
     <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://zcutie.top/archives/2023/04/index.html">
+<meta property="og:title" content="Zcutie">
+<meta property="og:url" content="http://zcutie.top/page/2/index.html">
 <meta property="og:site_name" content="Zcutie">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Zcutie">
@@ -28,7 +28,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - Zcutie</title>
+  <title>Zcutie</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -82,7 +82,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 100vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -220,13 +220,17 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="归档"></span>
+            <span id="subtitle" data-typed-text="往事交给岁月整理，未来留给时间证明"></span>
           
         </div>
 
         
       </div>
 
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
       
     </div>
   </div>
@@ -240,36 +244,63 @@
     
       <div class="container nopadding-x-md">
         <div id="board"
-          >
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 11 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/archives/86ca21a1.html" target="_self">
+          Android SystemUI之Recents近期任务部分
+        </a>
+      </h2>
+
       
-      <p class="h5">2023</p>
-    
-    <a href="/archives/f150b502.html" class="list-group-item list-group-item-action">
-      <time>04-24</time>
-      <div class="list-group-item-title">Android 优化SystemUI下拉状态栏时图标的隐藏与显示</div>
-    </a>
-  
-    
-    <a href="/archives/327c0f33.html" class="list-group-item list-group-item-action">
-      <time>04-06</time>
-      <div class="list-group-item-title">Android系统之开机亮度需求</div>
-    </a>
-  
-</div>
+      <a class="index-excerpt index-excerpt__noimg" href="/archives/86ca21a1.html" target="_self">
+        <div>
+          SystemUI的recents启动流程
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-04 12:46" pubdate>
+              2022-08-04
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+              <a href="/tags/SystemUI/">#SystemUI</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
 
 
 
@@ -409,7 +440,37 @@ setInterval("createtime()",250);
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        typing(text);
+        jQuery.ajax({
+          type: 'GET',
+          url: '',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = ''.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request :', error);
+            }
+            typing(text);
+          }
+        })
       
     })(window, document);
   </script>
