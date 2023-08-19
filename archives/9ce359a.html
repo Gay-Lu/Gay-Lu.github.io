@@ -16,25 +16,26 @@
   <meta name="author" content="Zcutie">
   <meta name="keywords" content="">
   
-    <meta name="description" content="优化Android原生状态栏不会随着下拉状态进行图标显示与隐藏">
+    <meta name="description" content="Android之Spinner样式优化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 优化SystemUI下拉状态栏时图标的隐藏与显示">
-<meta property="og:url" content="http://zcutie.top/archives/f150b502.html">
+<meta property="og:title" content="Android之Spinner样式优化">
+<meta property="og:url" content="http://zcutie.top/archives/9ce359a.html">
 <meta property="og:site_name" content="Zcutie">
-<meta property="og:description" content="优化Android原生状态栏不会随着下拉状态进行图标显示与隐藏">
+<meta property="og:description" content="Android之Spinner样式优化">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-24T07:02:37.000Z">
-<meta property="article:modified_time" content="2023-08-12T08:03:02.981Z">
+<meta property="og:image" content="http://zcutie.top/%5Cimg%5Carticle%5CAndroid%5CSpinner%5Cimage-20230819162131435.png">
+<meta property="article:published_time" content="2023-08-19T08:19:10.000Z">
+<meta property="article:modified_time" content="2023-08-19T08:33:13.898Z">
 <meta property="article:author" content="Zcutie">
 <meta property="article:tag" content="Android">
-<meta property="article:tag" content="SystemUI">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://zcutie.top/%5Cimg%5Carticle%5CAndroid%5CSpinner%5Cimage-20230819162131435.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Android 优化SystemUI下拉状态栏时图标的隐藏与显示 - Zcutie</title>
+  <title>Android之Spinner样式优化 - Zcutie</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -240,7 +241,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Android 优化SystemUI下拉状态栏时图标的隐藏与显示"></span>
+            <span id="subtitle" data-typed-text="Android之Spinner样式优化"></span>
           
         </div>
 
@@ -256,8 +257,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-24 15:02" pubdate>
-          2023年4月24日 下午
+        <time datetime="2023-08-19 16:19" pubdate>
+          2023年8月19日 下午
         </time>
       </span>
     
@@ -268,7 +269,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          1.1k 字
         
       </span>
     
@@ -279,7 +280,7 @@
         
         
         
-          21 分钟
+          10 分钟
         
       </span>
     
@@ -316,21 +317,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Android 优化SystemUI下拉状态栏时图标的隐藏与显示</h1>
+            <h1 id="seo-header">Android之Spinner样式优化</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>下拉状态栏时，home键、back键、recent键、hidebar以及自定义图标不会进行隐藏，仍旧出现在下拉状态栏的两侧</p>
-<p>涉及文件：<br>CollapsedStatusBarFragment.java<br>代码地址：<br>SystemUI\src\com\android\systemui\statusbar\phone\CollapsedStatusBarFragment.java</p>
-<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="原生基础上进行修改"><a href="#原生基础上进行修改" class="headerlink" title="原生基础上进行修改"></a>原生基础上进行修改</h2><p>onViewCreated中获取图标，比如home键、back键以及recent按键，安卓原生没有对其进行处理，只对clock进行了处理</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br>      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">onViewCreated</span><span class="hljs-params">(View view, <span class="hljs-meta">@Nullable</span> Bundle savedInstanceState)</span> &#123;<br>          <span class="hljs-built_in">super</span>.onViewCreated(view, savedInstanceState);<br>          mStatusBar = (PhoneStatusBarView) view;<br>          <span class="hljs-keyword">if</span> (savedInstanceState != <span class="hljs-literal">null</span> &amp;&amp; savedInstanceState.containsKey(EXTRA_PANEL_STATE)) &#123;<br>              mStatusBar.restoreHierarchyState(<br>                      savedInstanceState.getSparseParcelableArray(EXTRA_PANEL_STATE));<br>          &#125;<br>          mDarkIconManager = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DarkIconManager</span>(view.findViewById(R.id.statusIcons));<br>          mDarkIconManager.setShouldLog(<span class="hljs-literal">true</span>);<br>          Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);<br>          mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);<br>          mClockView = mStatusBar.findViewById(R.id.clock);<br>          <span class="hljs-comment">//add view for home back recent and hidebtn start</span><br>          mKeyHome = mStatusBar.findViewById(R.id.home);<br>          mKeyBack = mStatusBar.findViewById(R.id.back);<br>          mKeyRecent = mStatusBar.findViewById(R.id.recent);<br>          mKeyHideStatus = mStatusBar.findViewById(R.id.hide_bar);<br>          <span class="hljs-comment">//add view for home back recent and hidebtn end</span><br>          showSystemIconArea(<span class="hljs-literal">false</span>);<br>          showClock(<span class="hljs-literal">false</span>);<br>          initEmergencyCryptkeeperText();<br>          initOperatorName();<br>      &#125;<br></code></pre></td></tr></table></figure>
+                <p>修改样式为：</p>
+<p><img src="/%5Cimg%5Carticle%5CAndroid%5CSpinner%5Cimage-20230819162131435.png" srcset="/img/loading.gif" lazyload alt="image-20230819162131435"></p>
+<p>1.选择模式spinnerMode&#x3D;”dropdown”</p>
+<p>dropdown:下拉列表式</p>
+<p>dialog:对话框式</p>
+<p>2.设置基本样式</p>
+<p>在styles.xml中新建</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;fragment_spinner&quot;</span>&gt;</span><span class="language-xml"></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!--基本长宽--&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;android:layout_width&quot;</span>&gt;</span>412dp<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;android:layout_height&quot;</span>&gt;</span>56dp<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!--设置靠右对齐，并且间距40dp--&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;android:layout_alignParentEnd&quot;</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;android:layout_marginEnd&quot;</span>&gt;</span>40dp<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-comment">&lt;!--设置弹出的列表选项的背景--&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;android:popupBackground&quot;</span>&gt;</span>@drawable/ic_sys_usb_button_n<span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span></span><br><span class="language-xml">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="disable中进行图标的显示和隐藏"><a href="#disable中进行图标的显示和隐藏" class="headerlink" title="disable中进行图标的显示和隐藏"></a>disable中进行图标的显示和隐藏</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br>      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">disable</span><span class="hljs-params">(<span class="hljs-type">int</span> displayId, <span class="hljs-type">int</span> state1, <span class="hljs-type">int</span> state2, <span class="hljs-type">boolean</span> animate)</span> &#123;<br>          <span class="hljs-keyword">if</span> (displayId != getContext().getDisplayId()) &#123;<br>              <span class="hljs-keyword">return</span>;<br>          &#125;<br>          state1 = adjustDisableFlags(state1);<br>          <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">old1</span> <span class="hljs-operator">=</span> mDisabled1;<br>          <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">diff1</span> <span class="hljs-operator">=</span> state1 ^ old1;<br>          mDisabled1 = state1;<br>          <span class="hljs-keyword">if</span> ((diff1 &amp; DISABLE_SYSTEM_INFO) != <span class="hljs-number">0</span>) &#123;<br>              <span class="hljs-keyword">if</span> ((state1 &amp; DISABLE_SYSTEM_INFO) != <span class="hljs-number">0</span>) &#123;<br>                  hideSystemIconArea(animate);<br>                  <span class="hljs-comment">//add for hiding status bar icon start</span><br>                  hideStatusBarKeys(animate);<br>                  <span class="hljs-comment">//add for hiding status bar icon end</span><br>                  hideOperatorName(animate);<br>              &#125; <span class="hljs-keyword">else</span> &#123;<br>                  showSystemIconArea(animate);<br>                  <span class="hljs-comment">//add for showing status bar icon start</span><br>                  showStatusBarKeys(animate);<br>                  <span class="hljs-comment">//add for showing status bar icon end</span><br>                  showOperatorName(animate);<br>              &#125;<br>          &#125;<br>          ...<br>      &#125;<br></code></pre></td></tr></table></figure>
+<p>引入</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">style=&quot;@style/fragment_spinner&quot;<br></code></pre></td></tr></table></figure>
 
-<h2 id="增加隐藏显示方法"><a href="#增加隐藏显示方法" class="headerlink" title="增加隐藏显示方法"></a>增加隐藏显示方法</h2><h3 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">hideStatusBarKeys</span><span class="hljs-params">(<span class="hljs-type">boolean</span> animate)</span> &#123;<br>        <span class="hljs-keyword">if</span> (mKeyHome != <span class="hljs-literal">null</span>) &#123;<br>            animateHide(mKeyHome, animate);<br>            animateHide(mKeyBack, animate);<br>            animateHide(mKeyRecent, animate);<br>			animateHide(mKeyHideStatus, animate);<br>			<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>3.设置第一个列表的背景，即呈现出来的效果</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">android:background=&quot;@drawable/spinner_normal&quot;<br></code></pre></td></tr></table></figure>
 
-<h3 id="显示"><a href="#显示" class="headerlink" title="显示"></a>显示</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">showStatusBarKeys</span><span class="hljs-params">(<span class="hljs-type">boolean</span> animate)</span> &#123;<br>        <span class="hljs-keyword">if</span> (mKeyHome != <span class="hljs-literal">null</span>) &#123;<br>            animateShow(mKeyHome, animate);<br>            animateShow(mKeyBack, animate);<br>            animateShow(mKeyRecent, animate);<br>			animateShow(mKeyHideStatus, animate);<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>在drawable目录下新建spinner_normal.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">layer-list</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">item</span>&gt;</span><br>    	<span class="hljs-tag">&lt;<span class="hljs-name">shape</span> <span class="hljs-attr">android:shape</span>=<span class="hljs-string">&quot;rectangle&quot;</span>&gt;</span><br>        	<span class="hljs-tag">&lt;<span class="hljs-name">solid</span> <span class="hljs-attr">android:color</span>=<span class="hljs-string">&quot;@color/export_other_split&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">corners</span> <span class="hljs-attr">android:radius</span>=<span class="hljs-string">&quot;4dp&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">shape</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">item</span>&gt;</span><br>    	<span class="hljs-tag">&lt;<span class="hljs-name">bitmap</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:gravity</span>=<span class="hljs-string">&quot;end&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">android:src</span>=<span class="hljs-string">&quot;@drawable/icon_right_arrow&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">layer-list</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 
                 
@@ -367,8 +375,6 @@
       
         <a href="/tags/Android/" class="print-no-link">#Android</a>
       
-        <a href="/tags/SystemUI/" class="print-no-link">#SystemUI</a>
-      
     </div>
   
 </div>
@@ -379,8 +385,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Android 优化SystemUI下拉状态栏时图标的隐藏与显示</div>
-      <div>http://zcutie.top/archives/f150b502.html</div>
+      <div>Android之Spinner样式优化</div>
+      <div>http://zcutie.top/archives/9ce359a.html</div>
     </div>
     <div class="license-meta">
       
@@ -392,7 +398,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月24日</div>
+          <div>2023年8月19日</div>
         </div>
       
       
@@ -424,18 +430,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/archives/8e1dee1.html" title="Android替换系统默认字体">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Android替换系统默认字体</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/archives/327c0f33.html" title="Android系统之开机亮度需求">
-                        <span class="hidden-mobile">Android系统之开机亮度需求</span>
+                      <a href="/archives/79666db.html" title="数据结构">
+                        <span class="hidden-mobile">数据结构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
