@@ -439,7 +439,7 @@
     <title>Android之Spinner样式优化</title>
     <url>/archives/9ce359a.html</url>
     <content><![CDATA[<p>修改样式为：</p>
-<p><img src="/img/article/Android/Spinner/image-20230819162131435.png" alt="image-20230819162131435"></p>
+<p><img src="https://zcutie.top/img/article/Android/Spinner/image-20230819162131435.png" alt="image-20230819162131435"></p>
 <p>1.选择模式spinnerMode&#x3D;”dropdown”</p>
 <p>dropdown:下拉列表式</p>
 <p>dialog:对话框式</p>
@@ -462,6 +462,18 @@
       </categories>
       <tags>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android之修改系统状态栏为透明状</title>
+    <url>/archives/d80670dd.html</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>SystemUI</tag>
       </tags>
   </entry>
 </search>
